@@ -3,7 +3,7 @@
 #include "image.h"
 
 int main() {
-  struct image_handle img_handle = make_random_noise_image(100, 100);
-  print_image_as_ppm(img_handle);
+  struct ImageHandle img_handle = makeRandomNoiseImage(100, 100);
+  printImageAsPPM(img_handle);
   free(img_handle.pixels);
 }
