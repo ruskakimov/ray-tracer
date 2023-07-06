@@ -11,5 +11,4 @@ struct ImageHandle {
 };
 
 void printImageAsPPM(struct ImageHandle img);
-struct RGB makeRandomColor();
 struct ImageHandle makeRandomNoiseImage(uint32_t width, uint32_t height);
