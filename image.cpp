@@ -19,15 +19,15 @@ void printImageAsPPM(struct ImageHandle img) {
 
 struct RGB makeRandomColor() {
   return (struct RGB) {
-    (unsigned short)(frand() * 255.0),
-      (unsigned short)(frand() * 255.0),
-      (unsigned short)(frand() * 255.0),
+    (uint8_t)(frand() * 255.0),
+      (uint8_t)(frand() * 255.0),
+      (uint8_t)(frand() * 255.0),
   };
 }
 
-struct ImageHandle makeRandomNoiseImage(int width, int height) {
+struct ImageHandle makeRandomNoiseImage(uint32_t width, uint32_t height) {
   int pixel_count = width * height;
-  struct RGB* pixels = malloc(pixel_count * sizeof(struct RGB));
+  struct RGB* pixels = (struct RGB*)malloc(pixel_count * sizeof(struct RGB));
 
   struct RGB* p = pixels;
   struct RGB* end_p = pixels + pixel_count;

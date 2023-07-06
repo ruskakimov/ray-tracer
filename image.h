@@ -1,15 +1,15 @@
 struct RGB {
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
+  uint8_t r;
+  uint8_t g;
+  uint8_t b;
 };
 
 struct ImageHandle {
-  unsigned int width;
-  unsigned int height;
+  uint32_t width;
+  uint32_t height;
   struct RGB* pixels;
 };
 
 void printImageAsPPM(struct ImageHandle img);
 struct RGB makeRandomColor();
-struct ImageHandle makeRandomNoiseImage(int width, int height);
+struct ImageHandle makeRandomNoiseImage(uint32_t width, uint32_t height);
