@@ -1,16 +1,16 @@
 #pragma once
 
-struct RGB {
+typedef struct {
   uint8_t r;
   uint8_t g;
   uint8_t b;
-};
+} RGB;
 
-struct ImageHandle {
+typedef struct {
   uint32_t width;
   uint32_t height;
-  struct RGB* pixels;
-};
+  RGB* pixels;
+} ImageHandle;
 
-void printImageAsPPM(struct ImageHandle img);
-struct ImageHandle makeRandomNoiseImage(uint32_t width, uint32_t height);
+void printImageAsPPM(ImageHandle img);
+ImageHandle makeRandomNoiseImage(uint32_t width, uint32_t height);
