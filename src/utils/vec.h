@@ -3,6 +3,11 @@
 typedef struct {
   double x;
   double y;
+} Vec2;
+
+typedef struct {
+  double x;
+  double y;
   double z;
 } Vec3;
 
