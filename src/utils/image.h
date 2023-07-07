@@ -4,13 +4,13 @@ typedef struct {
   uint8_t r;
   uint8_t g;
   uint8_t b;
-} RGB;
+} Pixel;
 
 typedef struct {
   uint32_t width;
   uint32_t height;
-  RGB* pixels;
+  Pixel* pixels;
 } ImageHandle;
 
-void printImageAsPPM(ImageHandle img);
-ImageHandle makeRandomNoiseImage(uint32_t width, uint32_t height);
+ImageHandle makeImage(uint32_t width, uint32_t height);
+void printImageAsPPM(ImageHandle* img);
