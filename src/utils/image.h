@@ -12,5 +12,5 @@ typedef struct {
   Pixel* pixels;
 } ImageHandle;
 
-ImageHandle makeImage(uint32_t width, uint32_t height);
-void printImageAsPPM(ImageHandle* img);
+ImageHandle image_make(uint32_t width, uint32_t height);
+void image_printAsPPM(ImageHandle* img);

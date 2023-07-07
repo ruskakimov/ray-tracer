@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "image.h"
 
-ImageHandle makeImage(uint32_t width, uint32_t height) {
+ImageHandle image_make(uint32_t width, uint32_t height) {
   Pixel* pixels = (Pixel*)malloc((width * height) * sizeof(Pixel));
   return (ImageHandle) { width, height, pixels };
 }
 
-void printImageAsPPM(ImageHandle* img) {
+void image_printAsPPM(ImageHandle* img) {
   printf("P3\n");
   printf("%d %d\n", img->width, img->height);
   printf("%d\n", 255);
