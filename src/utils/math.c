@@ -5,6 +5,10 @@ Vec3 vec3_add(Vec3 v1, Vec3 v2) {
   return (Vec3) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
 }
 
+Vec3 vec3_sub(Vec3 v1, Vec3 v2) {
+  return vec3_add(v1, vec3_scale(v2, -1));
+}
+
 Vec3 vec3_scale(Vec3 v1, double scalar) {
   return (Vec3) { v1.x* scalar, v1.y* scalar, v1.z* scalar };
 }
