@@ -36,11 +36,11 @@ double ray_sphereHitTime(Ray ray, Sphere sphere) {
   // (x0 + dx*t - a)^2 + (y0 + dy*t - b)^2 + (z0 + dz*t - c)^2 = r^2
 
   // x0^2 + 2*x0*dx*t - x0*a + dx^2*t^2 - 2*a*dx*t - a*x0 + a^2 +
-  // y0^2 + 2*y0*dy*t - y0*b + dy^2*t^2 - 2*a*dy*t - b*y0 + b^2 +
-  // z0^2 + 2*z0*dz*t - z0*c + dz^2*t^2 - 2*a*dz*t - c*z0 + c^2 = r^2
+  // y0^2 + 2*y0*dy*t - y0*b + dy^2*t^2 - 2*b*dy*t - b*y0 + b^2 +
+  // z0^2 + 2*z0*dz*t - z0*c + dz^2*t^2 - 2*c*dz*t - c*z0 + c^2 = r^2
 
   // A = dx^2 + dy^2 + dz^2
-  // B = 2*x0*dx + 2*y0*dy + 2*z0*dz - 2*a*dx - 2*a*dy - 2*a*dz
+  // B = 2*x0*dx + 2*y0*dy + 2*z0*dz - 2*a*dx - 2*b*dy - 2*c*dz
   // C = x0^2 + y0^2 + z0^2 - x0*a - y0*b - z0*c - a*x0 - b*y0 - c*z0 + a^2 + b^2 + c^2 - r^2
 
   double a = sphere.center.x;
@@ -56,7 +56,7 @@ double ray_sphereHitTime(Ray ray, Sphere sphere) {
   double dz = ray.dir.z;
 
   double A = (dx * dx) + (dy * dy) + (dz * dz);
-  double B = (2 * x0 * dx) + (2 * y0 * dy) + (2 * z0 * dz) - (2 * a * dx) - (2 * a * dy) - (2 * a * dz);
+  double B = (2 * x0 * dx) + (2 * y0 * dy) + (2 * z0 * dz) - (2 * a * dx) - (2 * b * dy) - (2 * c * dz);
   double C = (x0 * x0) + (y0 * y0) + (z0 * z0) - (x0 * a) - (y0 * b) - (z0 * c) - (a * x0 - b * y0 - c * z0) + (a * a) + (b * b) + (c * c) - (r * r);
 
   double discr = calcDiscriminant(A, B, C);
