@@ -48,3 +48,8 @@ Vec3 operator-(Vec3 a, const Vec3& b) {
   a -= b;
   return a;
 }
+
+Vec3 operator*(Vec3 a, const double t) {
+  a *= t;
+  return a;
+}

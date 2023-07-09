@@ -1,24 +1,9 @@
-#include <math.h>
 #include "math.h"
 
-Vec3 vec3_add(Vec3 v1, Vec3 v2) {
-  return (Vec3) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
-}
-
-Vec3 vec3_sub(Vec3 v1, Vec3 v2) {
-  return vec3_add(v1, vec3_scale(v2, -1));
-}
-
-Vec3 vec3_scale(Vec3 v1, double scalar) {
-  return (Vec3) { v1.x* scalar, v1.y* scalar, v1.z* scalar };
-}
-
-double vec3_sqLen(Vec3 v) {
-  return v.x * v.x + v.y * v.y + v.z * v.z;
-}
+#include <cmath>
 
 Vec3 ray_pointAt(Ray ray, double time) {
-  return vec3_add(ray.origin, vec3_scale(ray.dir, time));
+  return ray.origin + ray.dir * time;
 }
 
 double ray_sphereHitTime(Ray ray, Sphere sphere) {
@@ -43,17 +28,17 @@ double ray_sphereHitTime(Ray ray, Sphere sphere) {
   // B = 2*x0*dx + 2*y0*dy + 2*z0*dz - 2*a*dx - 2*b*dy - 2*c*dz
   // C = x0^2 + y0^2 + z0^2 - x0*a - y0*b - z0*c - a*x0 - b*y0 - c*z0 + a^2 + b^2 + c^2 - r^2
 
-  double a = sphere.center.x;
-  double b = sphere.center.y;
-  double c = sphere.center.z;
+  double a = sphere.center.x();
+  double b = sphere.center.y();
+  double c = sphere.center.z();
   double r = sphere.radius;
 
-  double x0 = ray.origin.x;
-  double y0 = ray.origin.y;
-  double z0 = ray.origin.z;
-  double dx = ray.dir.x;
-  double dy = ray.dir.y;
-  double dz = ray.dir.z;
+  double x0 = ray.origin.x();
+  double y0 = ray.origin.y();
+  double z0 = ray.origin.z();
+  double dx = ray.dir.x();
+  double dy = ray.dir.y();
+  double dz = ray.dir.z();
 
   double A = (dx * dx) + (dy * dy) + (dz * dz);
   double B = (2 * x0 * dx) + (2 * y0 * dy) + (2 * z0 * dz) - (2 * a * dx) - (2 * b * dy) - (2 * c * dz);
