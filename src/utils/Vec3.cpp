@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+Vec3::Vec3(double x, double y, double z) : m_x{ x }, m_y{ y }, m_z{ z } {}
+
 double Vec3::sqLen() const {
   return m_x * m_x + m_y * m_y + m_z * m_z;
 }
