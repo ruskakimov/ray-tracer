@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "stdlib.h"
+#include "stdio.h"
 #include "image.h"
 
-ImageHandle image_make(uint32_t width, uint32_t height) {
+ImageHandle image_make(int width, int height) {
   Pixel* pixels = (Pixel*)malloc((width * height) * sizeof(Pixel));
   return (ImageHandle) { width, height, pixels };
 }
