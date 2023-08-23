@@ -5,7 +5,7 @@
 #include "utils/Vec3.h"
 
 int main() {
-  ImageHandle img = image_make(400, 300);
+  ImageHandle img = make_image(400, 300);
   Sphere sphere = { Vec3(0, 0, -20), 12 };
 
   Vec3 camera(0, 0, 0);
@@ -35,6 +35,6 @@ int main() {
     }
   }
 
-  image_printAsPPM(&img);
+  print_image_as_ppm(&img);
   free(img.pixels);
 }
