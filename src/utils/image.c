@@ -1,5 +1,5 @@
-#include "stdlib.h"
-#include "stdio.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include "image.h"
 
 ImageHandle make_image(int width, int height) {
