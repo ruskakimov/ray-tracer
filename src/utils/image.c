@@ -7,7 +7,7 @@ ImageHandle make_image(int width, int height) {
   return (ImageHandle) { width, height, pixels };
 }
 
-void print_image_as_ppm(ImageHandle* img) {
+void print_image(ImageHandle* img) {
   printf("P3\n");
   printf("%d %d\n", img->width, img->height);
   printf("%d\n", 255);

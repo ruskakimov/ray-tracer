@@ -1,12 +1,35 @@
+#include <math.h>
 #include "math.h"
 
-#include <cmath>
-
-Vec3 ray_pointAt(Ray ray, double time) {
-  return ray.origin + ray.dir * time;
+Vec3 add_vect(Vec3 v1, Vec3 v2) {
+  return (Vec3) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
 }
 
-double ray_sphereHitTime(Ray ray, Sphere sphere) {
+Vec3 sub_vect(Vec3 v1, Vec3 v2) {
+  return (Vec3) { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
+}
+
+Vec3 mul_vect(Vec3 v, double s) {
+  return (Vec3) { v.x* s, v.y* s, v.z* s };
+}
+
+Vec3 div_vect(Vec3 v, double s) {
+  return (Vec3) { v.x / s, v.y / s, v.z / s };
+}
+
+double vect_len(Vec3 v) {
+  return sqrt(vect_sqlen(v));
+}
+
+double vect_sqlen(Vec3 v) {
+  return v.x * v.x + v.y + v.y + v.z + v.z;
+}
+
+Vec3 ray_point(Ray ray, double t) {
+  return add_vect(ray.origin, mul_vect(ray.dir, t));
+}
+
+double ray_sphere_t(Ray ray, Sphere sphere) {
   // Sphere eq:
   // (x-a)^2 + (y-b)^2 + (z-c)^2 = r^2
 
@@ -28,37 +51,37 @@ double ray_sphereHitTime(Ray ray, Sphere sphere) {
   // B = 2*x0*dx + 2*y0*dy + 2*z0*dz - 2*a*dx - 2*b*dy - 2*c*dz
   // C = x0^2 + y0^2 + z0^2 - x0*a - y0*b - z0*c - a*x0 - b*y0 - c*z0 + a^2 + b^2 + c^2 - r^2
 
-  double a = sphere.center.x();
-  double b = sphere.center.y();
-  double c = sphere.center.z();
+  double a = sphere.center.x;
+  double b = sphere.center.y;
+  double c = sphere.center.z;
   double r = sphere.radius;
 
-  double x0 = ray.origin.x();
-  double y0 = ray.origin.y();
-  double z0 = ray.origin.z();
-  double dx = ray.dir.x();
-  double dy = ray.dir.y();
-  double dz = ray.dir.z();
+  double x0 = ray.origin.x;
+  double y0 = ray.origin.y;
+  double z0 = ray.origin.z;
+  double dx = ray.dir.x;
+  double dy = ray.dir.y;
+  double dz = ray.dir.z;
 
   double A = (dx * dx) + (dy * dy) + (dz * dz);
   double B = (2 * x0 * dx) + (2 * y0 * dy) + (2 * z0 * dz) - (2 * a * dx) - (2 * b * dy) - (2 * c * dz);
   double C = (x0 * x0) + (y0 * y0) + (z0 * z0) - (x0 * a) - (y0 * b) - (z0 * c) - (a * x0 - b * y0 - c * z0) + (a * a) + (b * b) + (c * c) - (r * r);
 
-  double discr = calcDiscriminant(A, B, C);
+  double d = discr(A, B, C);
 
-  if (discr < 0) return -1.0;
-  Vec2 roots = calcRoots(A, B, discr);
+  if (d < 0) return -1.0;
+  Vec2 roots = sqroots(A, B, d);
 
   if (roots.x < 0) return roots.y; // Smaller root is behind ray origin.
   return roots.x;
 }
 
-double calcDiscriminant(double a, double b, double c) {
+double discr(double a, double b, double c) {
   return b * b - 4 * a * c;
 }
 
 // Calculates two roots to a quadratic equation. Roots are sorted.
-Vec2 calcRoots(double a, double b, double discriminant) {
-  double sqDis = sqrt(discriminant);
+Vec2 sqroots(double a, double b, double discr) {
+  double sqDis = sqrt(discr);
   return (Vec2) { (-b - sqDis) / (2 * a), (-b + sqDis) / (2 * a) };
 }

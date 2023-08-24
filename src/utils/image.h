@@ -13,4 +13,4 @@ typedef struct {
 } ImageHandle;
 
 ImageHandle make_image(int width, int height);
-void print_image_as_ppm(ImageHandle* img);
+void print_image(ImageHandle* img);
