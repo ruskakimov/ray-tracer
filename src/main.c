@@ -3,6 +3,24 @@
 #include "utils/image.h"
 #include "utils/math.h"
 
+Vec3 lerp(Vec3 p1, Vec3 p2, double a) {
+  double b = 1 - a;
+  return add_vect(mul_vect(p1, b), mul_vect(p2, a));
+}
+
+Pixel vec_to_color(Vec3 v) {
+  Vec3 rgb = mul_vect(v, 255);
+  return (Pixel) { rgb.x, rgb.y, rgb.z };
+}
+
+Pixel sky_color(Ray ray) {
+  Vec3 u = unit_vect(ray.dir);
+  double a = (u.y + 1) / 2;
+  Vec3 color1 = (Vec3){ 1.0, 1.0, 1.0 };
+  Vec3 color2 = (Vec3){ 0.5, 0.7, 1.0 };
+  return vec_to_color(lerp(color1, color2, a));
+}
+
 int main() {
   ImageHandle img = make_image(400, 300);
   Sphere sphere = { (Vec3) { 0, 0, -20 }, 12 };
@@ -29,7 +47,7 @@ int main() {
         *(img.pixels + r * img.width + c) = (Pixel){ 255, 0, 0 };
       }
       else {
-        *(img.pixels + r * img.width + c) = (Pixel){ 0, 0, 0 };
+        *(img.pixels + r * img.width + c) = sky_color(ray);
       }
     }
   }
