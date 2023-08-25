@@ -17,6 +17,10 @@ Vec3 div_vect(Vec3 v, double s) {
   return (Vec3) { v.x / s, v.y / s, v.z / s };
 }
 
+Vec3 unit_vect(Vec3 v) {
+  return div_vect(v, vect_len(v));
+}
+
 double vect_len(Vec3 v) {
   return sqrt(vect_sqlen(v));
 }

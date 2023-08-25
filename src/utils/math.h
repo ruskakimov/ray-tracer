@@ -25,6 +25,7 @@ Vec3 add_vect(Vec3 v1, Vec3 v2);
 Vec3 sub_vect(Vec3 v1, Vec3 v2);
 Vec3 mul_vect(Vec3 v, double s);
 Vec3 div_vect(Vec3 v, double s);
+Vec3 unit_vect(Vec3 v);
 double vect_len(Vec3 v);
 double vect_sqlen(Vec3 v);
 
