@@ -3,8 +3,8 @@
 #include "utils/image.h"
 #include "utils/math.h"
 
-Color skyColor1 = (Color){ 255, 255, 255 };
-Color skyColor2 = (Color){ 128, 179, 255 };
+const Color skyColor1 = (Color){ 255, 255, 255 };
+const Color skyColor2 = (Color){ 128, 179, 255 };
 
 Color sky_color(Ray ray) {
   Vec3 u = unit_vec(ray.dir);
