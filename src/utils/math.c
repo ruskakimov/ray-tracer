@@ -1,36 +1,36 @@
 #include <math.h>
 #include "math.h"
 
-Vec3 add_vect(Vec3 v1, Vec3 v2) {
+Vec3 add_vec(Vec3 v1, Vec3 v2) {
   return (Vec3) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
 }
 
-Vec3 sub_vect(Vec3 v1, Vec3 v2) {
+Vec3 sub_vec(Vec3 v1, Vec3 v2) {
   return (Vec3) { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
 }
 
-Vec3 mul_vect(Vec3 v, double s) {
+Vec3 mul_vec(Vec3 v, double s) {
   return (Vec3) { v.x* s, v.y* s, v.z* s };
 }
 
-Vec3 div_vect(Vec3 v, double s) {
+Vec3 div_vec(Vec3 v, double s) {
   return (Vec3) { v.x / s, v.y / s, v.z / s };
 }
 
-Vec3 unit_vect(Vec3 v) {
-  return div_vect(v, vect_len(v));
+Vec3 unit_vec(Vec3 v) {
+  return div_vec(v, vec_len(v));
 }
 
-double vect_len(Vec3 v) {
-  return sqrt(vect_sqlen(v));
+double vec_len(Vec3 v) {
+  return sqrt(vec_sqlen(v));
 }
 
-double vect_sqlen(Vec3 v) {
+double vec_sqlen(Vec3 v) {
   return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 Vec3 ray_point(Ray ray, double t) {
-  return add_vect(ray.origin, mul_vect(ray.dir, t));
+  return add_vec(ray.origin, mul_vec(ray.dir, t));
 }
 
 double ray_sphere_t(Ray ray, Sphere sphere) {

@@ -5,16 +5,16 @@
 
 Vec3 lerp(Vec3 p1, Vec3 p2, double a) {
   double b = 1 - a;
-  return add_vect(mul_vect(p1, b), mul_vect(p2, a));
+  return add_vec(mul_vec(p1, b), mul_vec(p2, a));
 }
 
 Color vec_to_color(Vec3 v) {
-  Vec3 rgb = mul_vect(v, 255);
+  Vec3 rgb = mul_vec(v, 255);
   return (Color) { rgb.x, rgb.y, rgb.z };
 }
 
 Color sky_color(Ray ray) {
-  Vec3 u = unit_vect(ray.dir);
+  Vec3 u = unit_vec(ray.dir);
   double a = (u.y + 1.0) / 2.0;
   Vec3 color1 = (Vec3){ 1.0, 1.0, 1.0 };
   Vec3 color2 = (Vec3){ 0.5, 0.7, 1.0 };
@@ -30,17 +30,17 @@ int main() {
   Vec3 windowTopRight = { 4, 3, -2 };
   Vec3 windowBottomLeft = { -4, -3, -2 };
 
-  Vec3 windowRight = sub_vect(windowTopRight, windowTopLeft);
-  Vec3 windowDown = sub_vect(windowBottomLeft, windowTopLeft);
+  Vec3 windowRight = sub_vec(windowTopRight, windowTopLeft);
+  Vec3 windowDown = sub_vec(windowBottomLeft, windowTopLeft);
 
   for (int r = 0; r < img.height; r++) {
     for (int c = 0; c < img.width; c++) {
       double rightMult = (c + 0.5) / img.width;
       double downMult = (r + 0.5) / img.height;
-      Vec3 right = mul_vect(windowRight, rightMult);
-      Vec3 down = mul_vect(windowDown, downMult);
-      Vec3 windowPoint = add_vect(windowTopLeft, add_vect(right, down));
-      Ray ray = { camera, sub_vect(windowPoint, camera) };
+      Vec3 right = mul_vec(windowRight, rightMult);
+      Vec3 down = mul_vec(windowDown, downMult);
+      Vec3 windowPoint = add_vec(windowTopLeft, add_vec(right, down));
+      Ray ray = { camera, sub_vec(windowPoint, camera) };
       double t = ray_sphere_t(ray, sphere);
 
       *(img.pixels + r * img.width + c) = (t > 0) ? (Color) { 255, 0, 0 } : sky_color(ray);
