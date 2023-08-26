@@ -3,22 +3,13 @@
 #include "utils/image.h"
 #include "utils/math.h"
 
-Vec3 lerp(Vec3 p1, Vec3 p2, double a) {
-  double b = 1 - a;
-  return add_vec(mul_vec(p1, b), mul_vec(p2, a));
-}
-
-Color vec_to_color(Vec3 v) {
-  Vec3 rgb = mul_vec(v, 255);
-  return (Color) { rgb.x, rgb.y, rgb.z };
-}
+Color skyColor1 = (Color){ 255, 255, 255 };
+Color skyColor2 = (Color){ 128, 179, 255 };
 
 Color sky_color(Ray ray) {
   Vec3 u = unit_vec(ray.dir);
   double a = (u.y + 1.0) / 2.0;
-  Vec3 color1 = (Vec3){ 1.0, 1.0, 1.0 };
-  Vec3 color2 = (Vec3){ 0.5, 0.7, 1.0 };
-  return vec_to_color(lerp(color1, color2, a));
+  return lerp(skyColor1, skyColor2, a);
 }
 
 int main() {

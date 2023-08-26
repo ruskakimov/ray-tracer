@@ -14,3 +14,5 @@ typedef struct {
 
 ImageHandle make_image(int width, int height);
 void print_image(ImageHandle* img);
+
+Color lerp(Color c1, Color c2, double a);

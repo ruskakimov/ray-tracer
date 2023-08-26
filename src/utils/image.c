@@ -19,3 +19,12 @@ void print_image(ImageHandle* img) {
     p++;
   }
 }
+
+Color lerp(Color c1, Color c2, double a) {
+  double b = 1.0 - a;
+  return (Color) {
+    c1.r* b + c2.r * a,
+      c1.g* b + c2.g * a,
+      c1.b* b + c2.b * a,
+  };
+}
