@@ -43,12 +43,7 @@ int main() {
       Ray ray = { camera, sub_vect(windowPoint, camera) };
       double t = ray_sphere_t(ray, sphere);
 
-      if (t > 0) {
-        *(img.pixels + r * img.width + c) = (Pixel){ 255, 0, 0 };
-      }
-      else {
-        *(img.pixels + r * img.width + c) = sky_color(ray);
-      }
+      *(img.pixels + r * img.width + c) = (t > 0) ? (Pixel) { 255, 0, 0 } : sky_color(ray);
     }
   }
 
