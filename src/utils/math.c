@@ -26,7 +26,7 @@ double vect_len(Vec3 v) {
 }
 
 double vect_sqlen(Vec3 v) {
-  return v.x * v.x + v.y + v.y + v.z + v.z;
+  return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 Vec3 ray_point(Ray ray, double t) {
