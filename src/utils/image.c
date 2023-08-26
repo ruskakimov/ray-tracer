@@ -20,6 +20,8 @@ void print_image(ImageHandle* img) {
   }
 }
 
+// Linear interpolation between 2 colors.
+// `a` must be in [0.0, 1.0] range.
 Color lerp(Color c1, Color c2, double a) {
   double b = 1.0 - a;
   return (Color) {
