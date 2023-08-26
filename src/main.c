@@ -15,7 +15,7 @@ Pixel vec_to_color(Vec3 v) {
 
 Pixel sky_color(Ray ray) {
   Vec3 u = unit_vect(ray.dir);
-  double a = (u.y + 1) / 2;
+  double a = (u.y + 1.0) / 2.0;
   Vec3 color1 = (Vec3){ 1.0, 1.0, 1.0 };
   Vec3 color2 = (Vec3){ 0.5, 0.7, 1.0 };
   return vec_to_color(lerp(color1, color2, a));
