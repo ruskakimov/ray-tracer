@@ -8,12 +8,12 @@ Vec3 lerp(Vec3 p1, Vec3 p2, double a) {
   return add_vect(mul_vect(p1, b), mul_vect(p2, a));
 }
 
-Pixel vec_to_color(Vec3 v) {
+Color vec_to_color(Vec3 v) {
   Vec3 rgb = mul_vect(v, 255);
-  return (Pixel) { rgb.x, rgb.y, rgb.z };
+  return (Color) { rgb.x, rgb.y, rgb.z };
 }
 
-Pixel sky_color(Ray ray) {
+Color sky_color(Ray ray) {
   Vec3 u = unit_vect(ray.dir);
   double a = (u.y + 1.0) / 2.0;
   Vec3 color1 = (Vec3){ 1.0, 1.0, 1.0 };
@@ -43,7 +43,7 @@ int main() {
       Ray ray = { camera, sub_vect(windowPoint, camera) };
       double t = ray_sphere_t(ray, sphere);
 
-      *(img.pixels + r * img.width + c) = (t > 0) ? (Pixel) { 255, 0, 0 } : sky_color(ray);
+      *(img.pixels + r * img.width + c) = (t > 0) ? (Color) { 255, 0, 0 } : sky_color(ray);
     }
   }
 

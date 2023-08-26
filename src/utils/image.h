@@ -4,12 +4,12 @@ typedef struct {
   unsigned char r;
   unsigned char g;
   unsigned char b;
-} Pixel;
+} Color;
 
 typedef struct {
   int width;
   int height;
-  Pixel* pixels;
+  Color* pixels;
 } ImageHandle;
 
 ImageHandle make_image(int width, int height);
