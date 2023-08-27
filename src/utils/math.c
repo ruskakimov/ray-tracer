@@ -5,6 +5,7 @@ Vec3 add_vec(Vec3 v1, Vec3 v2) {
   return (Vec3) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
 }
 
+// Returns a vector from `v2` to `v1`, if `v1` and `v2` represent points.
 Vec3 sub_vec(Vec3 v1, Vec3 v2) {
   return (Vec3) { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
 }

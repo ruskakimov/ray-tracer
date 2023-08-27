@@ -13,7 +13,7 @@ Color sky_color(Ray ray) {
 }
 
 int main() {
-  ImageHandle img = make_image(400, 300);
+  ImageHandle img = make_image(800, 600);
   Sphere sphere = { (Vec3) { 0, 0, -20 }, 12 };
 
   Vec3 camera = { 0, 0, 0 };
@@ -34,7 +34,11 @@ int main() {
       Ray ray = { camera, sub_vec(windowPoint, camera) };
       double t = ray_sphere_t(ray, sphere);
 
-      *(img.pixels + r * img.width + c) = (t > 0) ? (Color) { 255, 0, 0 } : sky_color(ray);
+      Vec3 hitPoint = ray_point(ray, t);
+      Vec3 surfaceNormal = div_vec(sub_vec(hitPoint, sphere.center), sphere.radius);
+      Ray reflectedRay = (Ray){ hitPoint, surfaceNormal };
+
+      *(img.pixels + r * img.width + c) = (t > 0) ? sky_color(reflectedRay) : sky_color(ray);
     }
   }
 
