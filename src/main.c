@@ -6,6 +6,14 @@
 const Color skyColor1 = (Color){ 255, 255, 255 };
 const Color skyColor2 = (Color){ 128, 179, 255 };
 
+Color unit_vec_to_color(Vec3 v) {
+  return (Color) {
+    v.x * 255,
+      v.y * 255,
+      v.z * 255,
+  };
+}
+
 Color sky_color(Ray ray) {
   Vec3 u = unit_vec(ray.dir);
   double a = (u.y + 1.0) / 2.0;
@@ -38,7 +46,7 @@ int main() {
       Vec3 surfaceNormal = div_vec(sub_vec(hitPoint, sphere.center), sphere.radius);
       Ray reflectedRay = (Ray){ hitPoint, surfaceNormal };
 
-      *(img.pixels + r * img.width + c) = (t > 0) ? sky_color(reflectedRay) : sky_color(ray);
+      *(img.pixels + r * img.width + c) = (t > 0) ? unit_vec_to_color(surfaceNormal) : sky_color(ray);
     }
   }
 
