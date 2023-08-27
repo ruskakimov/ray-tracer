@@ -8,9 +8,9 @@ const Color skyColor2 = (Color){ 128, 179, 255 };
 
 Color unit_vec_to_color(Vec3 v) {
   return (Color) {
-    v.x * 255,
-      v.y * 255,
-      v.z * 255,
+    (v.x + 1.0) / 2.0 * 255.0,
+      (v.y + 1.0) / 2.0 * 255.0,
+      (v.z + 1.0) / 2.0 * 255.0,
   };
 }
 
