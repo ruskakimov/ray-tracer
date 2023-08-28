@@ -60,21 +60,13 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   // B = 2*x0*dx + 2*y0*dy + 2*z0*dz - 2*a*dx - 2*b*dy - 2*c*dz
   // C = x0^2 + y0^2 + z0^2 - x0*a - y0*b - z0*c - a*x0 - b*y0 - c*z0 + a^2 + b^2 + c^2 - r^2
 
-  double a = sphere.center.x;
-  double b = sphere.center.y;
-  double c = sphere.center.z;
-  double r = sphere.radius;
-
-  double x0 = ray.origin.x;
-  double y0 = ray.origin.y;
-  double z0 = ray.origin.z;
-  double dx = ray.dir.x;
-  double dy = ray.dir.y;
-  double dz = ray.dir.z;
-
   double A = vec_dot(ray.dir, ray.dir);
   double B = 2 * (vec_dot(ray.origin, ray.dir) - vec_dot(sphere.center, ray.dir));
-  double C = (x0 * x0) + (y0 * y0) + (z0 * z0) - (x0 * a) - (y0 * b) - (z0 * c) - (a * x0 - b * y0 - c * z0) + (a * a) + (b * b) + (c * c) - (r * r);
+  double C = vec_dot(ray.origin, ray.origin)
+    - vec_dot(ray.origin, sphere.center)
+    - vec_dot(sphere.center, ray.origin)
+    + vec_dot(sphere.center, sphere.center)
+    - (sphere.radius * sphere.radius);
 
   double discr = B * B - 4 * A * C;
 
