@@ -76,17 +76,13 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   double B = (2 * x0 * dx) + (2 * y0 * dy) + (2 * z0 * dz) - (2 * a * dx) - (2 * b * dy) - (2 * c * dz);
   double C = (x0 * x0) + (y0 * y0) + (z0 * z0) - (x0 * a) - (y0 * b) - (z0 * c) - (a * x0 - b * y0 - c * z0) + (a * a) + (b * b) + (c * c) - (r * r);
 
-  double d = discr(A, B, C);
+  double discr = B * B - 4 * A * C;
 
-  if (d < 0) return -1.0;
-  Vec2 roots = sqroots(A, B, d);
+  if (discr < 0) return -1.0;
+  Vec2 roots = sqroots(A, B, discr);
 
   if (roots.x < 0) return roots.y; // Smaller root is behind ray origin.
   return roots.x;
-}
-
-double discr(double a, double b, double c) {
-  return b * b - 4 * a * c;
 }
 
 // Calculates two roots to a quadratic equation. Roots are sorted.
