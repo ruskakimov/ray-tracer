@@ -62,18 +62,18 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
 
   Vec3 oc = sub_vec(ray.origin, sphere.center);
   double a = vec_dot(ray.dir, ray.dir);
-  double b = 2 * (vec_dot(ray.origin, ray.dir) - vec_dot(sphere.center, ray.dir));
+  double bHalf = vec_dot(ray.origin, ray.dir) - vec_dot(sphere.center, ray.dir);
   double c = vec_dot(oc, oc) - (sphere.radius * sphere.radius);
 
-  double discr = b * b - 4 * a * c;
+  double discr = bHalf * bHalf - a * c;
 
   if (discr < 0) return -1.0;
 
   double sqDiscr = sqrt(discr);
-  double root1 = (-b - sqDiscr) / (2 * a);
+  double root1 = (-bHalf - sqDiscr) / a;
   if (root1 > 0) return root1;
 
-  double root2 = (-b + sqDiscr) / (2 * a);
+  double root2 = (-bHalf + sqDiscr) / a;
   if (root2 > 0) return root2;
 
   return -1.0; // Sphere is behind the camera.
