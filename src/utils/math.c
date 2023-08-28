@@ -63,8 +63,7 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   double A = vec_dot(ray.dir, ray.dir);
   double B = 2 * (vec_dot(ray.origin, ray.dir) - vec_dot(sphere.center, ray.dir));
   double C = vec_dot(ray.origin, ray.origin)
-    - vec_dot(ray.origin, sphere.center)
-    - vec_dot(sphere.center, ray.origin)
+    - 2 * vec_dot(ray.origin, sphere.center)
     + vec_dot(sphere.center, sphere.center)
     - (sphere.radius * sphere.radius);
 
