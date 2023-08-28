@@ -45,7 +45,7 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   // y = y0 + dy * t
   // z = z0 + dz * t
 
-  // Plug x and y into sphere eq:
+  // Plug x, y, z into sphere eq:
   // (x0 + dx*t - a)^2 + (y0 + dy*t - b)^2 + (z0 + dz*t - c)^2 = r^2
 
   // x0^2 + 2*x0*dx*t - x0*a + dx^2*t^2 - 2*a*dx*t - a*x0 + a^2 +
