@@ -72,7 +72,7 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   double dy = ray.dir.y;
   double dz = ray.dir.z;
 
-  double A = (dx * dx) + (dy * dy) + (dz * dz);
+  double A = vec_dot(ray.dir, ray.dir);
   double B = (2 * x0 * dx) + (2 * y0 * dy) + (2 * z0 * dz) - (2 * a * dx) - (2 * b * dy) - (2 * c * dz);
   double C = (x0 * x0) + (y0 * y0) + (z0 * z0) - (x0 * a) - (y0 * b) - (z0 * c) - (a * x0 - b * y0 - c * z0) + (a * a) + (b * b) + (c * c) - (r * r);
 
