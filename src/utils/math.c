@@ -68,14 +68,13 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   double discr = b * b - 4 * a * c;
 
   if (discr < 0) return -1.0;
-  Vec2 roots = sqroots(a, b, discr);
 
-  if (roots.x < 0) return roots.y; // Smaller root is behind ray origin.
-  return roots.x;
-}
+  double sqDiscr = sqrt(discr);
+  double root1 = (-b - sqDiscr) / (2 * a);
+  if (root1 > 0) return root1;
 
-// Calculates two roots to a quadratic equation. Roots are sorted.
-Vec2 sqroots(double a, double b, double discr) {
-  double sqDis = sqrt(discr);
-  return (Vec2) { (-b - sqDis) / (2 * a), (-b + sqDis) / (2 * a) };
+  double root2 = (-b + sqDiscr) / (2 * a);
+  if (root2 > 0) return root2;
+
+  return -1.0; // Sphere is behind the camera.
 }
