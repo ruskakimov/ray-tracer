@@ -60,17 +60,15 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   // B = 2*x0*dx + 2*y0*dy + 2*z0*dz - 2*a*dx - 2*b*dy - 2*c*dz
   // C = x0^2 + y0^2 + z0^2 - x0*a - y0*b - z0*c - a*x0 - b*y0 - c*z0 + a^2 + b^2 + c^2 - r^2
 
-  double A = vec_dot(ray.dir, ray.dir);
-  double B = 2 * (vec_dot(ray.origin, ray.dir) - vec_dot(sphere.center, ray.dir));
-  double C = vec_dot(ray.origin, ray.origin)
-    - 2 * vec_dot(ray.origin, sphere.center)
-    + vec_dot(sphere.center, sphere.center)
-    - (sphere.radius * sphere.radius);
+  Vec3 oc = sub_vec(ray.origin, sphere.center);
+  double a = vec_dot(ray.dir, ray.dir);
+  double b = 2 * (vec_dot(ray.origin, ray.dir) - vec_dot(sphere.center, ray.dir));
+  double c = vec_dot(oc, oc) - (sphere.radius * sphere.radius);
 
-  double discr = B * B - 4 * A * C;
+  double discr = b * b - 4 * a * c;
 
   if (discr < 0) return -1.0;
-  Vec2 roots = sqroots(A, B, discr);
+  Vec2 roots = sqroots(a, b, discr);
 
   if (roots.x < 0) return roots.y; // Smaller root is behind ray origin.
   return roots.x;
