@@ -30,6 +30,10 @@ double vec_sqlen(Vec3 v) {
   return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
+double vec_dot(Vec3 v1, Vec3 v2) {
+  return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+
 Vec3 ray_point(Ray ray, double t) {
   return add_vec(ray.origin, mul_vec(ray.dir, t));
 }
