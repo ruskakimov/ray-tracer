@@ -16,11 +16,11 @@ typedef struct {
   double radius;
 } Sphere;
 
-Vec3 add_vec(Vec3 v1, Vec3 v2);
-Vec3 sub_vec(Vec3 v1, Vec3 v2);
-Vec3 mul_vec(Vec3 v, double s);
-Vec3 div_vec(Vec3 v, double s);
-Vec3 unit_vec(Vec3 v);
+Vec3 vec_add(Vec3 v1, Vec3 v2);
+Vec3 vec_sub(Vec3 v1, Vec3 v2);
+Vec3 vec_mul(Vec3 v, double s);
+Vec3 vec_div(Vec3 v, double s);
+Vec3 vec_unit(Vec3 v);
 double vec_len(Vec3 v);
 double vec_sqlen(Vec3 v);
 double vec_dot(Vec3 v1, Vec3 v2);

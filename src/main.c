@@ -15,7 +15,7 @@ Color unit_vec_to_color(Vec3 v) {
 }
 
 Color sky_color(Ray ray) {
-  Vec3 u = unit_vec(ray.dir);
+  Vec3 u = vec_unit(ray.dir);
   double a = (u.y + 1.0) / 2.0;
   return lerp(skyColor1, skyColor2, a);
 }
@@ -29,21 +29,21 @@ int main() {
   Vec3 windowTopRight = { 4, 3, -2 };
   Vec3 windowBottomLeft = { -4, -3, -2 };
 
-  Vec3 windowRight = sub_vec(windowTopRight, windowTopLeft);
-  Vec3 windowDown = sub_vec(windowBottomLeft, windowTopLeft);
+  Vec3 windowRight = vec_sub(windowTopRight, windowTopLeft);
+  Vec3 windowDown = vec_sub(windowBottomLeft, windowTopLeft);
 
   for (int r = 0; r < img.height; r++) {
     for (int c = 0; c < img.width; c++) {
       double rightMult = (c + 0.5) / img.width;
       double downMult = (r + 0.5) / img.height;
-      Vec3 right = mul_vec(windowRight, rightMult);
-      Vec3 down = mul_vec(windowDown, downMult);
-      Vec3 windowPoint = add_vec(windowTopLeft, add_vec(right, down));
-      Ray ray = { camera, sub_vec(windowPoint, camera) };
+      Vec3 right = vec_mul(windowRight, rightMult);
+      Vec3 down = vec_mul(windowDown, downMult);
+      Vec3 windowPoint = vec_add(windowTopLeft, vec_add(right, down));
+      Ray ray = { camera, vec_sub(windowPoint, camera) };
       double t = ray_sphere_t(ray, sphere);
 
       Vec3 hitPoint = ray_point(ray, t);
-      Vec3 surfaceNormal = div_vec(sub_vec(hitPoint, sphere.center), sphere.radius);
+      Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
       Ray reflectedRay = (Ray){ hitPoint, surfaceNormal };
 
       *(img.pixels + r * img.width + c) = (t > 0) ? unit_vec_to_color(surfaceNormal) : sky_color(ray);

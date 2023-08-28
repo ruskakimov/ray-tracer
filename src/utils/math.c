@@ -1,25 +1,25 @@
 #include <math.h>
 #include "math.h"
 
-Vec3 add_vec(Vec3 v1, Vec3 v2) {
+Vec3 vec_add(Vec3 v1, Vec3 v2) {
   return (Vec3) { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
 }
 
 // Returns a vector from `v2` to `v1`, if `v1` and `v2` represent points.
-Vec3 sub_vec(Vec3 v1, Vec3 v2) {
+Vec3 vec_sub(Vec3 v1, Vec3 v2) {
   return (Vec3) { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
 }
 
-Vec3 mul_vec(Vec3 v, double s) {
+Vec3 vec_mul(Vec3 v, double s) {
   return (Vec3) { v.x* s, v.y* s, v.z* s };
 }
 
-Vec3 div_vec(Vec3 v, double s) {
+Vec3 vec_div(Vec3 v, double s) {
   return (Vec3) { v.x / s, v.y / s, v.z / s };
 }
 
-Vec3 unit_vec(Vec3 v) {
-  return div_vec(v, vec_len(v));
+Vec3 vec_unit(Vec3 v) {
+  return vec_div(v, vec_len(v));
 }
 
 double vec_len(Vec3 v) {
@@ -35,7 +35,7 @@ double vec_dot(Vec3 v1, Vec3 v2) {
 }
 
 Vec3 ray_point(Ray ray, double t) {
-  return add_vec(ray.origin, mul_vec(ray.dir, t));
+  return vec_add(ray.origin, vec_mul(ray.dir, t));
 }
 
 double ray_sphere_t(Ray ray, Sphere sphere) {
@@ -60,7 +60,7 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   // B = 2*x0*dx + 2*y0*dy + 2*z0*dz - 2*a*dx - 2*b*dy - 2*c*dz
   // C = x0^2 + y0^2 + z0^2 - x0*a - y0*b - z0*c - a*x0 - b*y0 - c*z0 + a^2 + b^2 + c^2 - r^2
 
-  Vec3 oc = sub_vec(ray.origin, sphere.center);
+  Vec3 oc = vec_sub(ray.origin, sphere.center);
   double a = vec_dot(ray.dir, ray.dir);
   double bHalf = vec_dot(ray.origin, ray.dir) - vec_dot(sphere.center, ray.dir);
   double c = vec_dot(oc, oc) - (sphere.radius * sphere.radius);
