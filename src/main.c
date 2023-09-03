@@ -22,7 +22,13 @@ Color sky_color(Ray ray) {
 
 int main() {
   ImageHandle img = make_image(800, 600);
-  Sphere sphere = { (Vec3) { 0, 0, -20 }, 12 };
+
+  Sphere spheres[] = {
+    {.center = { 0, 0, -20 }, .radius = 12 },
+    {.center = { -15, 0, -20 }, .radius = 3 },
+    {.center = { 16, 0, -20 }, .radius = 4 },
+  };
+  size_t sphereCount = sizeof(spheres) / sizeof(Sphere);
 
   Vec3 camera = { 0, 0, 0 };
   Vec3 windowTopLeft = { -4, 3, -2 };
@@ -40,13 +46,22 @@ int main() {
       Vec3 down = vec_mul(windowDown, downMult);
       Vec3 windowPoint = vec_add(windowTopLeft, vec_add(right, down));
       Ray ray = { camera, vec_sub(windowPoint, camera) };
-      double t = ray_sphere_t(ray, sphere);
 
-      Vec3 hitPoint = ray_point(ray, t);
-      Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
-      Ray reflectedRay = (Ray){ hitPoint, surfaceNormal };
+      Color* hitColor = NULL;
 
-      *(img.pixels + r * img.width + c) = (t > 0) ? unit_vec_to_color(surfaceNormal) : sky_color(ray);
+      for (int i = 0; i < sphereCount; i++) {
+        Sphere sphere = spheres[i];
+        double t = ray_sphere_t(ray, sphere);
+        if (t < 0) continue;
+        Vec3 hitPoint = ray_point(ray, t);
+        Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
+        hitColor = malloc(sizeof(Color));
+        *hitColor = unit_vec_to_color(surfaceNormal);
+        break;
+      }
+
+      *(img.pixels + r * img.width + c) = hitColor != NULL ? *hitColor : sky_color(ray);
+      free(hitColor);
     }
   }
 
