@@ -20,15 +20,34 @@ Color sky_color(Ray ray) {
   return lerp(skyColor1, skyColor2, a);
 }
 
+const Sphere spheres[] = {
+  {.center = { 0, 0, -20 }, .radius = 12 },
+  {.center = { -15, 0, -20 }, .radius = 3 },
+  {.center = { 16, 0, -20 }, .radius = 4 },
+};
+const size_t sphereCount = sizeof(spheres) / sizeof(Sphere);
+
+typedef struct {
+  int hit;
+  Color color;
+} HitResult;
+
+HitResult getHit(Ray ray) {
+  for (int i = 0; i < sphereCount; i++) {
+    Sphere sphere = spheres[i];
+    double t = ray_sphere_t(ray, sphere);
+    if (t < 0) continue;
+
+    Vec3 hitPoint = ray_point(ray, t);
+    Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
+    Color color = unit_vec_to_color(surfaceNormal);
+    return (HitResult) { .hit = 1, .color = color };
+  }
+  return (HitResult) { .hit = 0 };
+}
+
 int main() {
   ImageHandle img = make_image(800, 600);
-
-  Sphere spheres[] = {
-    {.center = { 0, 0, -20 }, .radius = 12 },
-    {.center = { -15, 0, -20 }, .radius = 3 },
-    {.center = { 16, 0, -20 }, .radius = 4 },
-  };
-  size_t sphereCount = sizeof(spheres) / sizeof(Sphere);
 
   Vec3 camera = { 0, 0, 0 };
   Vec3 windowTopLeft = { -4, 3, -2 };
@@ -47,21 +66,9 @@ int main() {
       Vec3 windowPoint = vec_add(windowTopLeft, vec_add(right, down));
       Ray ray = { camera, vec_sub(windowPoint, camera) };
 
-      Color* hitColor = NULL;
+      HitResult hitResult = getHit(ray);
 
-      for (int i = 0; i < sphereCount; i++) {
-        Sphere sphere = spheres[i];
-        double t = ray_sphere_t(ray, sphere);
-        if (t < 0) continue;
-        Vec3 hitPoint = ray_point(ray, t);
-        Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
-        hitColor = malloc(sizeof(Color));
-        *hitColor = unit_vec_to_color(surfaceNormal);
-        break;
-      }
-
-      *(img.pixels + r * img.width + c) = hitColor != NULL ? *hitColor : sky_color(ray);
-      free(hitColor);
+      *(img.pixels + r * img.width + c) = hitResult.hit ? hitResult.color : sky_color(ray);
     }
   }
 
