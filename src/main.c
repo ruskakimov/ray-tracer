@@ -32,7 +32,7 @@ typedef struct {
   Color color;
 } HitResult;
 
-HitResult getHit(Ray ray) {
+HitResult get_hit(Ray ray) {
   for (int i = 0; i < sphereCount; i++) {
     Sphere sphere = spheres[i];
     double t = ray_sphere_t(ray, sphere);
@@ -66,7 +66,7 @@ int main() {
       Vec3 windowPoint = vec_add(windowTopLeft, vec_add(right, down));
       Ray ray = { camera, vec_sub(windowPoint, camera) };
 
-      HitResult hitResult = getHit(ray);
+      HitResult hitResult = get_hit(ray);
 
       *(img.pixels + r * img.width + c) = hitResult.hit ? hitResult.color : sky_color(ray);
     }
