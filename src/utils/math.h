@@ -29,3 +29,6 @@ Vec3 ray_point(Ray ray, double t);
 double ray_sphere_t(Ray ray, Sphere sphere);
 
 double discr(double a, double b, double c);
+
+double rnd();
+double rnd_between(double min, double max);

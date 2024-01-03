@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 #include "math.h"
 
 Vec3 vec_add(Vec3 v1, Vec3 v2) {
@@ -77,4 +78,13 @@ double ray_sphere_t(Ray ray, Sphere sphere) {
   if (root2 > 0) return root2;
 
   return -1.0; // Sphere is behind the camera.
+}
+
+// Returns a random double from [0.0, 1.0) range.
+double rnd() {
+  return rand() / (RAND_MAX + 1.0);
+}
+
+double rnd_between(double min, double max) {
+  return min + rnd() * (max - min);
 }
