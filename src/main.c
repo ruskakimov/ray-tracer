@@ -46,6 +46,16 @@ HitResult get_hit(Ray ray) {
   return (HitResult) { .hit = 0 };
 }
 
+Vec3 color2vec(Color color) {
+  return (Vec3) { color.r, color.g, color.b };
+}
+
+Color vec2color(Vec3 vector) {
+  return (Color) { vector.x, vector.y, vector.z };
+}
+
+const int ANTIALIAS_SAMPLES = 8;
+
 int main() {
   ImageHandle img = make_image(800, 600);
 
@@ -54,21 +64,34 @@ int main() {
   Vec3 windowTopRight = { 4, 3, -2 };
   Vec3 windowBottomLeft = { -4, -3, -2 };
 
-  Vec3 windowRight = vec_sub(windowTopRight, windowTopLeft);
-  Vec3 windowDown = vec_sub(windowBottomLeft, windowTopLeft);
+  Vec3 windowXAxis = vec_sub(windowTopRight, windowTopLeft);
+  Vec3 windowYAxis = vec_sub(windowBottomLeft, windowTopLeft);
+
+  Vec3 cellXAxis = vec_div(windowXAxis, img.width);
+  Vec3 cellYAxis = vec_div(windowYAxis, img.height);
 
   for (int r = 0; r < img.height; r++) {
     for (int c = 0; c < img.width; c++) {
-      double rightMult = (c + 0.5) / img.width;
-      double downMult = (r + 0.5) / img.height;
-      Vec3 right = vec_mul(windowRight, rightMult);
-      Vec3 down = vec_mul(windowDown, downMult);
-      Vec3 windowPoint = vec_add(windowTopLeft, vec_add(right, down));
-      Ray ray = { camera, vec_sub(windowPoint, camera) };
+      Vec3 rightOffset = vec_mul(windowXAxis, c / img.width);
+      Vec3 downOffset = vec_mul(windowYAxis, r / img.height);
+      Vec3 cellTopLeft = vec_add(windowTopLeft, vec_add(rightOffset, downOffset));
 
-      HitResult hitResult = get_hit(ray);
+      Vec3 cellColorAcc = { 0,0,0 };
 
-      *(img.pixels + r * img.width + c) = hitResult.hit ? hitResult.color : sky_color(ray);
+      for (int i = 0; i < ANTIALIAS_SAMPLES; i++) {
+        Vec3 xOffset = vec_mul(cellXAxis, rnd());
+        Vec3 yOffset = vec_mul(cellYAxis, rnd());
+        Vec3 cellSample = vec_add(cellTopLeft, vec_add(xOffset, yOffset));
+
+        Ray ray = { camera, vec_sub(cellSample, camera) };
+        HitResult hitResult = get_hit(ray);
+
+        Color color = hitResult.hit ? hitResult.color : sky_color(ray);
+        cellColorAcc = vec_add(cellColorAcc, color2vec(color));
+      }
+
+      Color cellColor = vec2color(vec_div(cellColorAcc, ANTIALIAS_SAMPLES));
+      *(img.pixels + r * img.width + c) = cellColor;
     }
   }
 
