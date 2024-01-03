@@ -107,3 +107,14 @@ Vec3 rnd_in_unit_sphere() {
 Vec3 rnd_unit_vec() {
   return vec_unit(rnd_in_unit_sphere());
 }
+
+Vec3 rnd_on_hemisphere(Vec3 normal) {
+  Vec3 u = rnd_unit_vec();
+  if (vec_dot(u, normal) > 0) {
+    // Positive dot product, angle is less than 90deg.
+    return u;
+  }
+  else {
+    return vec_mul(u, -1);
+  }
+}

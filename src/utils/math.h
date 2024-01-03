@@ -36,3 +36,4 @@ Vec3 rnd_vec();
 Vec3 rnd_vec_between(double min, double max);
 Vec3 rnd_in_unit_sphere();
 Vec3 rnd_unit_vec();
+Vec3 rnd_on_hemisphere(Vec3 normal);
