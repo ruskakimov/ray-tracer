@@ -32,3 +32,5 @@ double discr(double a, double b, double c);
 
 double rnd();
 double rnd_between(double min, double max);
+Vec3 rnd_vec();
+Vec3 rnd_vec_between(double min, double max);

@@ -88,3 +88,11 @@ double rnd() {
 double rnd_between(double min, double max) {
   return min + rnd() * (max - min);
 }
+
+Vec3 rnd_vec() {
+  return (Vec3) { rnd(), rnd(), rnd() };
+}
+
+Vec3 rnd_vec_between(double min, double max) {
+  return (Vec3) { rnd_between(min, max), rnd_between(min, max), rnd_between(min, max) };
+}
