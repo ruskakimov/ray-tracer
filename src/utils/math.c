@@ -96,3 +96,14 @@ Vec3 rnd_vec() {
 Vec3 rnd_vec_between(double min, double max) {
   return (Vec3) { rnd_between(min, max), rnd_between(min, max), rnd_between(min, max) };
 }
+
+Vec3 rnd_in_unit_sphere() {
+  while (1) {
+    Vec3 vec = rnd_vec_between(-1, 1);
+    if (vec_len(vec) < 1) return vec;
+  }
+}
+
+Vec3 rnd_unit_vec() {
+  return vec_unit(rnd_in_unit_sphere());
+}
