@@ -54,7 +54,7 @@ Color vec2color(Vec3 vector) {
   return (Color) { vector.x, vector.y, vector.z };
 }
 
-const int ANTIALIAS_SAMPLES = 8;
+const int ANTIALIAS_SAMPLES = 32;
 
 int main() {
   ImageHandle img = make_image(800, 600);
@@ -72,16 +72,16 @@ int main() {
 
   for (int r = 0; r < img.height; r++) {
     for (int c = 0; c < img.width; c++) {
-      Vec3 rightOffset = vec_mul(windowXAxis, c / img.width);
-      Vec3 downOffset = vec_mul(windowYAxis, r / img.height);
-      Vec3 cellTopLeft = vec_add(windowTopLeft, vec_add(rightOffset, downOffset));
+      Vec3 xWindowOffset = vec_mul(windowXAxis, (double)c / img.width);
+      Vec3 yWindowOffset = vec_mul(windowYAxis, (double)r / img.height);
+      Vec3 cellTopLeft = vec_add(windowTopLeft, vec_add(xWindowOffset, yWindowOffset));
 
       Vec3 cellColorAcc = { 0,0,0 };
 
       for (int i = 0; i < ANTIALIAS_SAMPLES; i++) {
-        Vec3 xOffset = vec_mul(cellXAxis, rnd());
-        Vec3 yOffset = vec_mul(cellYAxis, rnd());
-        Vec3 cellSample = vec_add(cellTopLeft, vec_add(xOffset, yOffset));
+        Vec3 xCellOffset = vec_mul(cellXAxis, rnd());
+        Vec3 yCellOffset = vec_mul(cellYAxis, rnd());
+        Vec3 cellSample = vec_add(cellTopLeft, vec_add(xCellOffset, yCellOffset));
 
         Ray ray = { camera, vec_sub(cellSample, camera) };
         HitResult hitResult = get_hit(ray);
