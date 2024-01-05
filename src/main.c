@@ -57,10 +57,18 @@ const int ANTIALIAS_SAMPLES = 32;
 int main() {
   ImageHandle img = make_image(800, 600);
 
-  Vec3 camera = { 0, 0, 0 };
-  Vec3 windowTopLeft = { -4, 3, -2 };
-  Vec3 windowTopRight = { 4, 3, -2 };
-  Vec3 windowBottomLeft = { -4, -3, -2 };
+  double focal_length = 1.0;
+  double viewport_h = 2.0;
+  double viewport_w = viewport_h / (double)img.height * (double)img.width;
+  Vec3 camera_center = { 0, 0, 0 };
+
+  Vec3 focal_v = (Vec3){ 0, 0, -focal_length };
+  Vec3 viewport_hv = (Vec3){ 0, -viewport_h, 0 };
+  Vec3 viewport_wv = (Vec3){ viewport_w, 0, 0 };
+
+  Vec3 windowTopLeft = vec_sub(vec_sub(vec_add(camera_center, focal_v), vec_div(viewport_hv, 2)), vec_div(viewport_wv, 2));
+  Vec3 windowTopRight = vec_add(vec_sub(vec_add(camera_center, focal_v), vec_div(viewport_hv, 2)), vec_div(viewport_wv, 2));
+  Vec3 windowBottomLeft = vec_sub(vec_add(vec_add(camera_center, focal_v), vec_div(viewport_hv, 2)), vec_div(viewport_wv, 2));
 
   Vec3 windowXAxis = vec_sub(windowTopRight, windowTopLeft);
   Vec3 windowYAxis = vec_sub(windowBottomLeft, windowTopLeft);
@@ -81,7 +89,7 @@ int main() {
         Vec3 yCellOffset = vec_mul(cellYAxis, rnd());
         Vec3 cellSample = vec_add(cellTopLeft, vec_add(xCellOffset, yCellOffset));
 
-        Ray ray = { camera, vec_sub(cellSample, camera) };
+        Ray ray = { camera_center, vec_sub(cellSample, camera_center) };
         Color color = get_ray_color(ray);
         cellColorAcc = vec_add(cellColorAcc, color2vec(color));
       }
