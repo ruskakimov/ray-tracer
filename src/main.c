@@ -27,6 +27,14 @@ const Sphere spheres[] = {
 };
 const size_t sphereCount = sizeof(spheres) / sizeof(Sphere);
 
+Vec3 color2vec(Color color) {
+  return (Vec3) { color.r, color.g, color.b };
+}
+
+Color vec2color(Vec3 vector) {
+  return (Color) { vector.x, vector.y, vector.z };
+}
+
 Color get_ray_color(Ray ray) {
   for (int i = 0; i < sphereCount; i++) {
     Sphere sphere = spheres[i];
@@ -35,18 +43,12 @@ Color get_ray_color(Ray ray) {
     if (t >= 0) {
       Vec3 hitPoint = ray_point(ray, t);
       Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
-      return unit_vec_to_color(surfaceNormal);
+      Vec3 reflectedDir = rnd_on_hemisphere(surfaceNormal);
+      Ray reflectedRay = (Ray){ .dir = reflectedDir, .origin = hitPoint };
+      return vec2color(vec_mul(color2vec(get_ray_color(reflectedRay)), 0.5));
     }
   }
   return sky_color(ray);
-}
-
-Vec3 color2vec(Color color) {
-  return (Vec3) { color.r, color.g, color.b };
-}
-
-Color vec2color(Vec3 vector) {
-  return (Color) { vector.x, vector.y, vector.z };
 }
 
 const int ANTIALIAS_SAMPLES = 32;
