@@ -27,23 +27,18 @@ const Sphere spheres[] = {
 };
 const size_t sphereCount = sizeof(spheres) / sizeof(Sphere);
 
-typedef struct {
-  int hit;
-  Color color;
-} HitResult;
-
-HitResult get_hit(Ray ray) {
+Color get_ray_color(Ray ray) {
   for (int i = 0; i < sphereCount; i++) {
     Sphere sphere = spheres[i];
     double t = ray_sphere_t(ray, sphere);
-    if (t < 0) continue;
 
-    Vec3 hitPoint = ray_point(ray, t);
-    Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
-    Color color = unit_vec_to_color(surfaceNormal);
-    return (HitResult) { .hit = 1, .color = color };
+    if (t >= 0) {
+      Vec3 hitPoint = ray_point(ray, t);
+      Vec3 surfaceNormal = vec_div(vec_sub(hitPoint, sphere.center), sphere.radius);
+      return unit_vec_to_color(surfaceNormal);
+    }
   }
-  return (HitResult) { .hit = 0 };
+  return sky_color(ray);
 }
 
 Vec3 color2vec(Color color) {
@@ -84,9 +79,7 @@ int main() {
         Vec3 cellSample = vec_add(cellTopLeft, vec_add(xCellOffset, yCellOffset));
 
         Ray ray = { camera, vec_sub(cellSample, camera) };
-        HitResult hitResult = get_hit(ray);
-
-        Color color = hitResult.hit ? hitResult.color : sky_color(ray);
+        Color color = get_ray_color(ray);
         cellColorAcc = vec_add(cellColorAcc, color2vec(color));
       }
 
