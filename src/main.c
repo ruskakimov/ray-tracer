@@ -21,10 +21,10 @@ Color sky_color(Ray ray) {
 }
 
 const Sphere spheres[] = {
-  {.center = { 0, 0, -20 }, .radius = 12 },
-  {.center = { -15, 0, -20 }, .radius = 3 },
-  {.center = { 16, 0, -20 }, .radius = 4 },
-  {.center = { 0, -112, -20 }, .radius = 100 },
+  {.center = { 0, 0, -1 }, .radius = 0.5 },
+  {.center = { -1, 0, -1 }, .radius = 0.5 },
+  {.center = { 1, 0, -1 }, .radius = 0.5 },
+  {.center = { 0, -100.5, -1 }, .radius = 100 },
 };
 const size_t sphereCount = sizeof(spheres) / sizeof(Sphere);
 
